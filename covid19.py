@@ -113,9 +113,14 @@ class Covid:
 cv=Covid()
 # cv.get_population('egypt')
 
-# from flask import Flask,jsonify,request
+from flask import Flask,jsonify,request
 
-# app=Flask(__name__)
+app=Flask(__name__)
+@app.route('/api/v1/tc/country=<country>', methods=['GET'])
+def total_cases(country):
+    return jsonify({country:cv.get_total_cases(country)})
 
-print(cv.get_total_cases('algeria'))
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
