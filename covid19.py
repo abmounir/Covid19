@@ -113,9 +113,9 @@ class Covid:
 cv=Covid()
 # cv.get_population('egypt')
 
-from flask import Flask,jsonify,request
+# from flask import Flask,jsonify,request
 
-app=Flask(__name__)
+# app=Flask(__name__)
 
-print(cv.get_total_cases('Saudi Arabia'))
+print(cv.get_total_cases('algeria'))
 
