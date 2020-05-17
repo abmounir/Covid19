@@ -107,6 +107,29 @@ class Covid:
             else:
                 i+=1
         return self.population[index]
+
+    def get_country_data(self, country):
+        i = 0
+        index = 0
+        for c in self.countries:
+            if str(country).lower() == c.lower():
+                index = i
+            else:
+                i += 1
+        data_dict={}
+        data_dict['new_cases'] = self.new_cases[index]
+        data_dict['total_cases'] = self.total_cases[index]
+        data_dict['total_deaths'] = self.total_deaths[index]
+        data_dict['new_deaths'] = self.new_deaths[index]
+        data_dict['total_recovered'] = self.total_recovered[index]
+        data_dict['active_cases'] = self.active_cases[index]
+        data_dict['critical'] = self.critical[index]
+        data_dict['tot_cases_1m_pop'] = self.tot_cases_1m_pop[index]
+        data_dict['deaths_1m_pop'] = self.deaths_1m_pop[index]
+        data_dict['total_tests'] = self.total_tests[index]
+        data_dict['tests_1m_pop'] = self.tests_1m_pop[index]
+        data_dict['population'] = self.population[index]
+        return data_dict
     
 
 
@@ -118,7 +141,7 @@ from flask import Flask,jsonify,request
 app=Flask(__name__)
 @app.route('/api/v1/tc/country=<country>', methods=['GET'])
 def total_cases(country):
-    return jsonify({country:cv.get_total_cases(country)})
+    return jsonify({country:cv.get_country_data(country)})
 
 
 if __name__ == '__main__':
