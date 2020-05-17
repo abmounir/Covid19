@@ -2,26 +2,25 @@ from bs4 import BeautifulSoup as bs
 from urllib.request import urlopen
 import requests 
 
-page=requests.get('https://www.worldometers.info/coronavirus/')
-soup=bs(page.content,'html.parser')
-
 class Covid:
-    countries=[]
-    total_cases=[]
-    new_cases=[]
-    total_deaths=[]
-    new_deaths=[]
-    total_recovered=[]
-    active_cases=[]
-    critical=[]
-    tot_cases_1m_pop=[]
-    deaths_1m_pop=[]
-    total_tests=[]
-    tests_1m_pop=[]
-    population=[]
     def __init__(self):
-        for tr in soup.tbody.find_all('tr')[7:]:
-            
+        self.countries = []
+        self.total_cases = []
+        self.new_cases = []
+        self.total_deaths = []
+        self.new_deaths = []
+        self.total_recovered = []
+        self.active_cases = []
+        self.critical = []
+        self.tot_cases_1m_pop = []
+        self.deaths_1m_pop = []
+        self.total_tests = []
+        self.tests_1m_pop = []
+        self.population = []
+        self.link = 'https://www.worldometers.info/coronavirus/'
+        self.page = requests.get(self.link)
+        self.soup = bs(self.page.content, 'html.parser')
+        for tr in self.soup.tbody.find_all('tr')[7:]:
             self.countries.append(tr.find_all('td')[1].text)
             self.total_cases.append(tr.find_all('td')[2].text)
             self.new_cases.append(tr.find_all('td')[3].text)
@@ -133,17 +132,8 @@ class Covid:
     
 
 
-cv=Covid()
-# cv.get_population('egypt')
-
-from flask import Flask,jsonify,request
-
-app=Flask(__name__)
-@app.route('/api/v1/tc/country=<country>', methods=['GET'])
-def total_cases(country):
-    return jsonify({country:cv.get_country_data(country)})
+# cv=Covid()
+# print(Covid().get_population('algeria'))
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
-
+    
